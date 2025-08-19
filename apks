@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ModMenu-DarkWolf</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 20px;
+      background-color: #1f1f1f;
+      border-bottom: 2px solid #00ff99;
+      box-shadow: 0 4px 10px rgba(0, 255, 128, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      color: #00ffcc;
+      letter-spacing: 1px;
+    }
+
+    #search {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      width: 70%;
+      max-width: 300px;
+      font-size: 16px;
+      outline: none;
+      transition: 0.3s;
+      background-color: #2e2e2e;
+      color: #fff;
+    }
+
+    #search:focus { box-shadow: 0 0 10px #00ff99; }
+
+    .telegram-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #0088cc;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .telegram-btn:hover { background-color: #00aaff; }
+    .telegram-btn img { width: 20px; height: 20px; }
+
+    main { padding: 30px 20px; }
+
+    .apk-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .apk-card {
+      background: #1b1b1b;
+      padding: 20px;
+      border-radius: 16px;
+      width: 260px;
+      box-shadow: 0 0 15px rgba(0, 255, 128, 0.2);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .apk-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0, 255, 128, 0.4);
+    }
+    .apk-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 2px solid #00ff99;
+      background: #000;
+    }
+    .apk-card h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: #00ffcc;
+    }
+    .apk-card p { margin: 4px 0; font-size: 14px; color: #ccc; }
+    .apk-card a {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(145deg, #00ff99, #00cc66);
+      color: #000;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .apk-card a:hover { background: linear-gradient(145deg, #00cc66, #00ff99); }
+
+    .mod-features {
+      list-style: none;
+      padding: 0;
+      margin-top: 10px;
+      font-size: 13px;
+      text-align: left;
+    }
+    .mod-features li::before {
+      content: "✔ ";
+      color: #00ff99;
+      margin-right: 4px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1f1f1f;
+      color: #ccc;
+      border-top: 1px solid #333;
+      margin-top: 40px;
+    }
+
+    @media screen and (max-width: 600px) {
+      header { flex-direction: column; align-items: flex-start; }
+      #search { width: 100%; margin-top: 10px; }
+      .telegram-btn { margin-top: 10px; }
+    }
+
+    /* 🎵 Music controls */
+    #toggleBtn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #00ffcc;
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div style="text-align: center; margin: 20px 0;">
+  <label for="musicSelect" style="font-weight: bold; font-size: 18px;">🎧 Choose Music: </label>
+  <select id="musicSelect" style="padding: 8px 12px; border-radius: 10px; background: #2e2e2e; color: #fff; border: none;">
+    <option value="music/Fade.mp3">Fade</option>
+    <option value="music/Hislerim.mp3">Hislerim</option>
+    <option value="music/SayGoodBye.mp3">SayGoodBye</option>
+    <option value="music/Alone.mp3">Alone - Marshmellow</option>
+    <option value="music/Kalimutan.mp3">Kalimutan Ka</option>
+    <option value="music/Aurora.mp3">RunAway</option>
+  </select>
+
+  <br>
+  <button id="toggleBtn">▶ Play</button>
+
+  <!-- 🔴 autoplay removed -->
+  <audio id="bgMusic" loop>
+    <source src="music/Fade.mp3" type="audio/mpeg" />
+  </audio>
+</div>
+
+<header>
+  <h1>DarkWolf</h1>
+  <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+    <a href="https://t.me/Dark_mods_chat_group" target="_blank" class="telegram-btn">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram Logo">
+      Join Telegram
+    </a>
+    <input type="text" id="search" placeholder="Search">
+  </div>
+</header>
+
+<main>
+  <section class="apk-list" id="apkList"></section>
+</main>
+
+<footer>
+  <p>© 2025 💥MEGAN MODZ💥</p>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  const apkList = document.getElementById("apkList");
+  const searchBox = document.getElementById("search");
+  const musicSelect = document.getElementById("musicSelect");
+  const bgMusic = document.getElementById("bgMusic");
+  const toggleBtn = document.getElementById("toggleBtn");
+
+  // 🎵 Toggle Play/Pause/Resume
+  toggleBtn.addEventListener("click", () => {
+    if (bgMusic.paused) {
+      bgMusic.play();
+      toggleBtn.textContent = "⏸️ Pause";
+    } else {
+      bgMusic.pause();
+      toggleBtn.textContent = "▶️ Resume";
+    }
+  });
+
+  // 🎵 Change track (reset to Play, don’t autoplay)
+  musicSelect.addEventListener("change", () => {
+    bgMusic.src = musicSelect.value;
+    bgMusic.pause();
+    toggleBtn.textContent = "▶ Play";
+  });
+
+  // ✅ Render APK cards
+  function renderApps(data) {
+    apkList.innerHTML = "";
+    data.forEach(app => {
+      const card = document.createElement("div");
+      card.className = "apk-card";
+      card.innerHTML = `
+        <img src="${app.icon}" alt="${app.name} Icon">
+        <h2>${app.name}</h2>
+        <p>Version: ${app.version}</p>
+        <p>Size: ${app.size}</p>
+        <ul class="mod-features">
+          ${app.modFeatures.map(f => `<li>${f}</li>`).join("")}
+        </ul>
+        <a href="${app.apk}" target="_blank">Download Apk</a>
+      `;
+      apkList.appendChild(card);
+    });
+  }
+
+  if (typeof appData !== "undefined") {
+    renderApps(appData);
+  } else {
+    apkList.innerHTML = "<p style='color:#aaa;'>⚠ No apps found. Make sure data.js is loaded.</p>";
+  }
+
+  // ✅ Search filter
+  searchBox.addEventListener("input", () => {
+    if (typeof appData === "undefined") return;
+    const term = searchBox.value.toLowerCase();
+    const filtered = appData.filter(app => app.name.toLowerCase().includes(term));
+    renderApps(filtered);
+  });
+</script>
+</body>
+</html>
